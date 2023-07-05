@@ -5,10 +5,11 @@ namespace TicketsApi.Models;
 
 public class Performer
 {
+    [Key]
     public long PerformerId { get; set; }
     public string Name { get; set; } = string.Empty;
 
-    public Event Events { get; set; }
+    public ICollection<Event> Events { get; } = new List<Event>();
 
-    public ICollection<Tour>? Tours { get; set; }
+    public ICollection<Tour>? Tours { get; } = new List<Tour>();
 }

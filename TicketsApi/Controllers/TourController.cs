@@ -11,55 +11,55 @@ namespace TicketsApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventController : ControllerBase
+    public class TourController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public EventController(DataContext context)
+        public TourController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: api/Event
+        // GET: api/Tour
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEvent()
+        public async Task<ActionResult<IEnumerable<Tour>>> GetTour()
         {
-          if (_context.Event == null)
+          if (_context.Tour == null)
           {
               return NotFound();
           }
-            return await _context.Event.ToListAsync();
+            return await _context.Tour.ToListAsync();
         }
 
-        // GET: api/Event/5
+        // GET: api/Tour/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Event>> GetEvent(long id)
+        public async Task<ActionResult<Tour>> GetTour(long id)
         {
-          if (_context.Event == null)
+          if (_context.Tour == null)
           {
               return NotFound();
           }
-            var foundEvent = await _context.Event.FindAsync(id);
+            var tour = await _context.Tour.FindAsync(id);
 
-            if (foundEvent == null)
+            if (tour == null)
             {
                 return NotFound();
             }
 
-            return foundEvent;
+            return tour;
         }
 
-        // PUT: api/Event/5
+        // PUT: api/Tour/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvent(long id, Event newEvent)
+        public async Task<IActionResult> PutTour(long id, Tour tour)
         {
-            if (id != newEvent.EventId)
+            if (id != tour.TourId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(newEvent).State = EntityState.Modified;
+            _context.Entry(tour).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace TicketsApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventExists(id))
+                if (!TourExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +80,44 @@ namespace TicketsApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Event
+        // POST: api/Tour
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Event>> PostEvent(Event @event)
+        public async Task<ActionResult<Tour>> PostTour(Tour tour)
         {
-          if (_context.Event == null)
+          if (_context.Tour == null)
           {
-              return Problem("Entity set 'DataContext.Event'  is null.");
+              return Problem("Entity set 'DataContext.Tour'  is null.");
           }
-            _context.Event.Add(@event);
+            _context.Tour.Add(tour);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEvent", new { id = @event.EventId }, @event);
+            return CreatedAtAction("GetTour", new { id = tour.TourId }, tour);
         }
 
-        // DELETE: api/Event/5
+        // DELETE: api/Tour/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvent(long id)
+        public async Task<IActionResult> DeleteTour(long id)
         {
-            if (_context.Event == null)
+            if (_context.Tour == null)
             {
                 return NotFound();
             }
-            var @event = await _context.Event.FindAsync(id);
-            if (@event == null)
+            var tour = await _context.Tour.FindAsync(id);
+            if (tour == null)
             {
                 return NotFound();
             }
 
-            _context.Event.Remove(@event);
+            _context.Tour.Remove(tour);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool EventExists(long id)
+        private bool TourExists(long id)
         {
-            return (_context.Event?.Any(e => e.EventId == id)).GetValueOrDefault();
+            return (_context.Tour?.Any(e => e.TourId == id)).GetValueOrDefault();
         }
     }
 }
